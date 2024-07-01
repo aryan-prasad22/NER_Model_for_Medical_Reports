@@ -38,7 +38,7 @@ sh
 pip install -r requirements.txt
 Download and place the pre-trained spaCy model:
 
-Ensure you have the spaCy model saved at the specified path (E:\Projects\NER_Project\NER_medical_model). If the model is in another location, update the path in the script accordingly.
+Ensure you have the spaCy model saved at the specified path (Path of the saved Model). If the model is in another location, update the path in the script accordingly.
 
 Run the application:
 
