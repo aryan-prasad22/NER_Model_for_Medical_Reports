@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Named Entity Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px; /* Increased max-width */
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto; /* Center the buttons horizontally */
+            padding: 10px 20px;
+            background-image: linear-gradient(to right, #007bff, #00bfff);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-image 0.3s;
+        }
+
+        button:hover {
+            background-image: linear-gradient(to right, #0056b3, #00a1dd);
+        }
+
+        .entities {
+            margin-top: 30px;
+        }
+
+        .entities table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .entities th, .entities td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .entities th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .entities td {
+            background-color: #f9f9f9;
+        }
+
+        /* Add CSS for success message */
+        .success-message {
+            text-align: center;
+            color: green;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Named Entity Recognition (Medical Data)</h1>
+        <!-- Add success message -->
+        <div class="success-message" id="successMessage">File uploaded successfully!</div>
+        <form method="post" enctype="multipart/form-data">
+            <textarea name="text" rows="10" placeholder="Enter your text here">{{ text }}</textarea><br>
+            <input type="file" name="file" id="fileInput" accept=".txt, .json" style="display: none;">
+            <button type="button" onclick="document.getElementById('fileInput').click();">Upload File</button>
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if entities %}
+        <div class="entities">
+            <h2>Named Entities:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Text</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Label</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.text }}</td>
+                        <td>{{ entity.start }}</td>
+                        <td>{{ entity.end }}</td>
+                        <td>{{ entity.label }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if visualization %}
+        <div class="entities">
+            <h2>Visualization:</h2>
+            {{ visualization|safe }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Show success message when file is selected
+        document.getElementById('fileInput').addEventListener('change', function() {
+            document.getElementById('successMessage').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
